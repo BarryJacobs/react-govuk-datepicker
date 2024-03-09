@@ -1,4 +1,8 @@
 name: Generate tag version
+permissions:
+  pull-requests: write
+  issues: write
+  repository-projects: write
 on:
   workflow_dispatch:
     inputs:
