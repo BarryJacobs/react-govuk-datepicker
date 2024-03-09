@@ -1,0 +1,524 @@
+@use "sass:math";
+
+$root-font-size: 16px !default;
+
+$light: 300 !default;
+$normal: 400 !default;
+$bold: 700 !default;
+
+$tiny-size: 12px !default;
+$tiny-size--medium: 14px !default;
+$small-size: 14px !default;
+$small-size--medium: 16px !default;
+
+$ds_colour__blue--light: #d9effc;
+$ds_colour__white: #ffffff;
+$ds_colour__yellow: #fdd522;
+$ds_colour__grey: #727272;
+$ds_colour__grey--light: #ebebeb;
+$ds_colour__grey--lighter: #f8f8f8;
+$ds_colour__grey--medium: #b3b3b3;
+$ds_colour__grey--dark: #333333;
+
+$ds_colour__text: $ds_colour__grey--dark !default;
+$ds_colour__text--secondary: $ds_colour__grey !default;
+$ds_colour__text--reversed: $ds_colour__white !default;
+
+$ds_colour__background--secondary: $ds_colour__grey--lighter !default;
+$ds_colour__background--primary--dim: $ds_colour__background--secondary !default;
+
+$ds_colour__background--tertiary: $ds_colour__grey--light !default;
+
+$ds_colour__focus: $ds_colour__grey--dark !default;
+$ds_colour__focus--background: $ds_colour__yellow !default;
+
+$ds_colour__link--current__background: $ds_colour__background--primary--dim !default;
+$ds_colour__link--focus: $ds_colour__focus !default;
+$ds_colour__link--focus__background: $ds_colour__focus--background !default;
+$ds_colour__link--focus__shadow: $ds_colour__focus !default;
+$ds_colour__link--disabled: $ds_colour__text !default;
+$ds_colour__link--disabled__background: $ds_colour__background--tertiary !default;
+$ds_colour__link--hover__background: $ds_colour__blue--light !default;
+
+$ds_colour__blocklink-bg--hover: $ds_colour__link--hover__background !default;
+$ds_colour__blocklink-bg--focus: $ds_colour__link--focus__background !default;
+
+$ds_colour__background--primary: $ds_colour__white !default;
+
+$ds_colour__border: $ds_colour__grey--medium !default;
+$ds_colour__border--strong: $ds_colour__grey--dark !default;
+
+$blocklink__outline-width: 0;
+
+$link__outline-width: 2px;
+$link__border-width: 3px;
+
+$button__height--small: 48px !default;
+
+$date-picker-focus-outline-width: 2px;
+$date-picker-focus-border-width: 3px;
+
+$transition-in-time: 0.2s !default;
+$transition-out-time: $transition-in-time !default;
+
+$ds_breakpoints: (
+  small: "(min-width: 480px)",
+  medium: "(min-width: 768px)",
+  large: "(min-width: 992px)",
+  xlarge: "(min-width: 1200px)",
+  small-down: "(max-width: 479px)",
+  medium-down: "(max-width: 767px)",
+  large-down: "(max-width: 991px)",
+  small-to-medium: "(min-width: 480px) and (max-width: 767px)",
+  medium-to-large: "(min-width: 768px) and (max-width: 991px)",
+  large-to-xlarge: "(min-width: 992px) and (max-width: 1199px)",
+  xlarge-up: "(min-width: 1200px)",
+  medium-portrait: "(min-width: 768px) and (orientation: portrait) and (max-width : 1024px)",
+  medium-landscape: "(min-width: 768px) and (orientation: landscape)  and (max-width : 1024px)"
+) !default;
+
+@function px-to-rem($px, $base: $root-font-size) {
+  @return math.div($px, $base) * 1rem;
+}
+
+@function nearest-grid-size($value, $grid: 8px) {
+  @return round(math.div($value, $grid)) * $grid;
+}
+
+@function line-height-on-grid($font-size, $line-height: 1.5, $grid: 8px) {
+  @return math.div(nearest-grid-size($font-size * $line-height, $grid), $font-size);
+}
+
+@mixin ds_box-shadow {
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+@mixin ds_media-query($breakpoint) {
+  @if not map-has-key($ds_breakpoints, $breakpoint) {
+    @error 'Breakpoint "#{$breakpoint}" not defined.';
+  }
+  $condition: map-get($ds_breakpoints, $breakpoint);
+  @media #{$condition} {
+    @content;
+  }
+}
+
+@mixin ds_media-query-high-contrast {
+  @media screen and (forced-colors: active) and (prefers-contrast: more) {
+    @content;
+  }
+}
+
+@mixin ds_high-contrast-focus($width: 2px) {
+  @include ds_media-query-high-contrast {
+    outline-color: highlight !important;
+    outline-style: solid !important;
+    outline-width: $width !important;
+
+    @content;
+  }
+}
+
+@mixin ds_colwidth($columns: 1, $total: 12, $gutter: $grid-gap-x) {
+  width: calc(#{100% * math.div($columns, $total)} - #{$gutter});
+}
+
+@mixin ds_button-sizing--small($icon: true) {
+  min-height: $button__height--small;
+  min-width: $button__height--small;
+  padding-top: 12px;
+  padding-bottom: 12px;
+
+  @if $icon {
+    > .ds_icon {
+      height: 32px;
+      padding: 8px;
+      width: 32px;
+    }
+  }
+}
+
+@mixin ds_layout($gutter: $grid-gap-x, $sub: false) {
+  @if $sub {
+  } @else {
+    margin-right: #{$gutter * -1};
+  }
+  overflow: hidden;
+  > * {
+    margin-right: $gutter;
+  }
+  @supports (display: grid) {
+    display: grid;
+    grid-gap: 0 $gutter;
+    margin-right: 0;
+    overflow: visible;
+
+    > * {
+      margin-left: 0;
+      margin-right: 0;
+      width: auto !important;
+    }
+  }
+}
+
+@mixin ds_blocklink($link-selector: null, $hover: true) {
+  display: block;
+  position: relative;
+  transition:
+    background-color $transition-out-time,
+    outline-color $transition-out-time;
+  z-index: 1;
+
+  outline: 0 !important;
+
+  &:focus {
+    background-color: $ds_colour__blocklink-bg--focus;
+    box-shadow:
+      inset #{$blocklink__outline-width * -1} #{$blocklink__outline-width + $link__border-width * -1}
+        $ds_colour__link--focus__shadow,
+      inset $blocklink__outline-width #{$blocklink__outline-width + $link__border-width * -1} $ds_colour__link--focus__shadow;
+    color: $ds_colour__link--focus;
+
+    @include ds_high-contrast-focus;
+  }
+
+  @if $hover {
+    &:hover:not(:focus) {
+      background-color: $ds_colour__blocklink-bg--hover;
+    }
+  }
+
+  @if $link-selector {
+    #{$link-selector} {
+      &:focus:hover {
+        text-decoration: none;
+      }
+    }
+
+    @supports (display: grid) {
+      #{$link-selector} {
+        background-color: transparent;
+        outline: none;
+
+        &::after {
+          content: "";
+          height: 100%;
+          left: 0px;
+          position: absolute;
+          top: 0px;
+          width: 100%;
+          z-index: 0;
+
+          @include ds_media-query-high-contrast {
+            content: none;
+          }
+        }
+
+        &:focus {
+          &::after {
+            transition-duration: 0s;
+          }
+        }
+      }
+
+      &:focus-within {
+        background-color: $ds_colour__blocklink-bg--focus !important;
+        box-shadow:
+          inset 0 -3px #333333,
+          inset 0 -3px #333333;
+        transition-duration: 0s;
+
+        #{$link-selector} {
+          &:focus {
+            box-shadow: none;
+            background-color: transparent;
+
+            @include ds_high-contrast-focus;
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin ds_tiny-size($type-grid: 8px) {
+  font-size: px-to-rem($tiny-size);
+  line-height: line-height-on-grid($tiny-size, $grid: $type-grid);
+
+  @include ds_media-query(medium) {
+    font-size: px-to-rem($tiny-size--medium);
+    line-height: line-height-on-grid($tiny-size--medium, $grid: $type-grid);
+  }
+}
+
+@mixin ds_small-size($type-grid: 8px) {
+  font-size: px-to-rem($small-size);
+  line-height: line-height-on-grid($small-size, $grid: $type-grid);
+
+  @include ds_media-query(medium) {
+    font-size: px-to-rem($small-size--medium);
+    line-height: line-height-on-grid($small-size--medium, $grid: $type-grid);
+  }
+}
+
+.fully-hidden {
+  display: none !important;
+}
+
+.visually-hidden {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute !important;
+  width: 1px;
+}
+
+.ds_datepicker {
+  position: absolute;
+  margin-bottom: 24px;
+  top: 40px !important;
+  left: 0 !important;
+  z-index: 999;
+
+  .ds_input {
+    margin-bottom: 0;
+  }
+
+  &__input-wrapper {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__dialog {
+    @include ds_box-shadow;
+
+    font-family: "Roboto";
+    background-color: $ds_colour__background--primary;
+    clear: both;
+    display: none;
+    padding: 8px;
+    outline: 1px solid $ds_colour__border;
+    outline-offset: -1px;
+    position: static;
+    top: 0;
+    transition:
+      background-color 0.2s,
+      outline-color 0.2s;
+    width: 296px;
+    z-index: 2;
+
+    &--open {
+      display: block;
+
+      @supports (left: var(--ds-date-picker-left-offset)) {
+        left: var(--ds-date-picker-left-offset);
+      }
+    }
+
+    &__header {
+      position: relative;
+      text-align: center;
+
+      > :nth-child(1) {
+        position: absolute;
+        left: 0;
+        top: -2px;
+      }
+
+      > :nth-child(3) {
+        position: absolute;
+        right: 0;
+        top: -2px;
+      }
+    }
+
+    &__title {
+      @include ds_small-size;
+      line-height: line-height-on-grid($small-size, 2);
+      margin: 0 !important;
+      text-transform: uppercase;
+    }
+
+    &__navbuttons {
+      button {
+        background-color: transparent;
+        color: $ds_colour__text;
+        font-weight: $normal;
+        min-height: 40px;
+        border: 0;
+        margin: 0;
+        padding: 4px;
+        min-width: 32px;
+
+        @include ds_blocklink;
+        display: inline-block;
+
+        &:hover {
+          color: currentColor;
+        }
+
+        .ds_icon {
+          height: 32px;
+          padding: 0;
+          position: static;
+          width: 24px;
+        }
+      }
+    }
+
+    &__table {
+      tbody:focus-within {
+        outline: $date-picker-focus-outline-width solid $ds_colour__link--focus__background;
+      }
+
+      td {
+        border: 0;
+        margin: 0;
+        outline: 0;
+        padding: 0;
+      }
+
+      th {
+        @include ds_small-size;
+        color: $ds_colour__text--secondary;
+        font-weight: $normal;
+      }
+
+      button {
+        font-family: "Roboto";
+        background-color: transparent;
+        border-width: 0;
+        color: $ds_colour__text;
+        font-weight: $normal;
+        min-height: 40px;
+        margin: 0;
+        padding: 0;
+        min-width: 40px;
+
+        @include ds_small-size;
+        @include ds_blocklink;
+
+        &:focus {
+          transition-duration: 0s;
+        }
+
+        &[disabled="true"],
+        &[aria-disabled="true"] {
+          background-color: $ds_colour__link--disabled__background;
+          color: $ds_colour__link--disabled;
+          pointer-events: none;
+
+          &:focus {
+            box-shadow:
+              inset 0 #{$date-picker-focus-border-width * -1} $ds_colour__focus,
+              inset 0 $date-picker-focus-outline-width $ds_colour__focus--background,
+              inset #{$date-picker-focus-outline-width * -1} 0 $ds_colour__focus--background,
+              inset 0 #{($date-picker-focus-outline-width + $date-picker-focus-border-width) * -1}
+                $ds_colour__focus--background,
+              inset $date-picker-focus-outline-width 0 $ds_colour__focus--background;
+          }
+        }
+
+        &.ds_datepicker__current {
+          $dp-current-outline-width: 2px;
+          outline: $dp-current-outline-width solid $ds_colour__border--strong !important;
+          outline-offset: #{$dp-current-outline-width * -1};
+        }
+
+        &.ds_datepicker__current[tabindex="-1"] {
+          background: $ds_colour__link--current__background;
+          color: currentColor;
+        }
+
+        &.ds_datepicker__today {
+          font-weight: $bold;
+
+          &::after {
+            background-color: currentColor;
+            border-radius: 4px;
+            bottom: 6px;
+            content: "";
+            height: 4px;
+            left: 50%;
+            margin-left: -2px;
+            position: absolute;
+            width: 4px;
+          }
+        }
+
+        &.ds_selected:not(:focus) {
+          background-color: $ds_colour__text;
+          color: $ds_colour__text--reversed;
+        }
+
+        &:focus {
+          color: $ds_colour__focus;
+          position: relative;
+          z-index: 2;
+        }
+      }
+    }
+
+    &__table-caption {
+      @include ds_tiny-size;
+      caption-side: bottom;
+      line-height: 2;
+      margin-top: 8px;
+    }
+
+    &__buttongroup {
+      @include ds_layout(8px);
+      overflow: visible;
+
+      button {
+        @include ds_colwidth(1, 2, 8px);
+        display: block;
+        float: left;
+        margin: 0;
+      }
+
+      @supports (display: grid) {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  }
+
+  &__button {
+    @include ds_small-size;
+    @include ds_button-sizing--small;
+
+    align-self: end;
+  }
+}
+
+@include ds_media-query(medium) {
+  .ds_datepicker {
+    &__dialog {
+      position: absolute;
+
+      &__title {
+        line-height: line-height-on-grid($small-size--medium, 1.5);
+        padding: 8px 0;
+      }
+
+      &__header {
+        > :nth-child(1) {
+          top: 0;
+        }
+
+        > :nth-child(3) {
+          top: 0;
+        }
+      }
+
+      &__table th {
+        line-height: line-height-on-grid($small-size--medium, 2);
+      }
+
+      &__table-caption {
+        line-height: line-height-on-grid($tiny-size--medium, 2);
+      }
+    }
+  }
+}
