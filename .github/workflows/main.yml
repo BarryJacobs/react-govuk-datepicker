@@ -23,6 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
+          node-version: '20'
           ref: main
       - run: |
           git config user.name github-actions
