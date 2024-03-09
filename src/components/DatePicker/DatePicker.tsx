@@ -1,10 +1,10 @@
 import { useState, useRef, useEffect, useMemo } from "react"
 import { FaRegCalendar } from "react-icons/fa"
-import { useIsMobile } from "hooks"
-import { InputWidth, InputWidthClass } from "types"
+import { useIsMobile } from "../../hooks"
+import { InputWidth, InputWidthClass } from "../../types"
 import { format, parse, startOfDay, parseISO, isValid } from "date-fns"
 import { enGB } from "date-fns/locale"
-import { Calendar } from "components"
+import { Calendar } from "../../components"
 
 import "./DatePicker.scss"
 

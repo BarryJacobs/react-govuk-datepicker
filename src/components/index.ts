@@ -3,4 +3,4 @@ import { Calendar } from "./Calendar/Calendar"
 
 export { DatePicker, Calendar }
 
-import "styles/styles.scss"
+import "../styles/styles.scss"
