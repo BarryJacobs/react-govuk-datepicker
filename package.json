@@ -1,7 +1,7 @@
 {
   "name": "react-govuk-datepicker",
   "private": false,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "type": "module",
   "main": "dist/react-govuk-datepicker.js",
   "module": "dist/react-govuk-datepicker.js",
@@ -31,13 +31,6 @@
       "yarn eslint",
       "yarn format"
     ]
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/react-govuk-datepicker.es.js",
-      "require": "./dist/react-govuk-datepicker.umd.js"
-    },
-    "./dist/style.css": "./dist/style.css"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.12",
