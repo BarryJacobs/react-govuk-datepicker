@@ -10,12 +10,10 @@ import {
   addYears,
   isEqual
 } from "date-fns"
-import {
-  HiMiniChevronLeft,
-  HiMiniChevronDoubleLeft,
-  HiMiniChevronRight,
-  HiMiniChevronDoubleRight
-} from "react-icons/hi2"
+import { CgChevronLeft } from "@react-icons/all-files/cg/CgChevronLeft"
+import { CgChevronDoubleLeft } from "@react-icons/all-files/cg/CgChevronDoubleLeft"
+import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight"
+import { CgChevronDoubleRight } from "@react-icons/all-files/cg/CgChevronDoubleRight"
 import { CalendarNavigationButton } from "./CalendarNavigationButton"
 import { CalendarDayHeading } from "./CalendarDayHeading"
 import { CalendarDayButton } from "./CalendarDayButton"
@@ -110,12 +108,12 @@ export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
           <div className="ds_datepicker__dialog__navbuttons">
             <CalendarNavigationButton
               description="Previous year"
-              icon={HiMiniChevronDoubleLeft}
+              icon={CgChevronDoubleLeft}
               onClick={() => onChangeSelectedDate(addYears(calendarDate, -1))}
             />
             <CalendarNavigationButton
               description="Previous month"
-              icon={HiMiniChevronLeft}
+              icon={CgChevronLeft}
               onClick={() => onChangeSelectedDate(addMonths(calendarDate, -1))}
             />
           </div>
@@ -123,12 +121,12 @@ export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
           <div className="ds_datepicker__dialog__navbuttons">
             <CalendarNavigationButton
               description="Next month"
-              icon={HiMiniChevronRight}
+              icon={CgChevronRight}
               onClick={() => onChangeSelectedDate(addMonths(calendarDate, 1))}
             />
             <CalendarNavigationButton
               description="Next year"
-              icon={HiMiniChevronDoubleRight}
+              icon={CgChevronDoubleRight}
               onClick={() => onChangeSelectedDate(addYears(calendarDate, 1))}
             />
           </div>

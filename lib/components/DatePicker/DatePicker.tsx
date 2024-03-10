@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from "react"
-import { FaRegCalendar } from "react-icons/fa"
+import { FaRegCalendar } from "@react-icons/all-files/fa/FaRegCalendar"
 import { useIsMobile } from "../../hooks"
 import { InputWidth, InputWidthClass } from "../../types"
 import { format, parse, startOfDay, parseISO, isValid } from "date-fns"
