@@ -4,7 +4,7 @@ import { useIsMobile } from "../../hooks"
 import { InputWidth, InputWidthClass } from "../../types"
 import { format, parse, startOfDay, parseISO, isValid } from "date-fns"
 import { enGB } from "date-fns/locale"
-import { Calendar } from "../../components"
+import { Calendar } from "../Calendar/Calendar"
 
 import "./DatePicker.scss"
 

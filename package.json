@@ -1,11 +1,19 @@
 {
   "name": "react-govuk-datepicker",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
+  "main": "dist/react-govuk-datepicker.js",
+  "types": "dist/main.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc --p ./tsconfig-build.json && vite build",
     "preview": "vite preview",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'",
     "lint:fix": "eslint --fix 'src/**/*.{jsx,ts,tsx}'",
@@ -23,9 +31,6 @@
       "yarn format"
     ]
   },
-  "files": [
-    "dist"
-  ],
   "exports": {
     ".": {
       "import": "./dist/react-govuk-datepicker.es.js",
@@ -33,9 +38,6 @@
     },
     "./dist/style.css": "./dist/style.css"
   },
-  "main": "./dist/react-govuk-datepicker.umd.js",
-  "module": "./dist/react-govuk-datepicker.es.js",
-  "types": "./dist/index.d.ts",
   "dependencies": {
     "@fontsource/roboto": "^5.0.12",
     "date-fns": "^3.3.1",
@@ -67,6 +69,7 @@
     "typescript": "^5.2.2",
     "vite": "^5.1.4",
     "vite-plugin-dts": "^3.7.3",
+    "vite-plugin-lib-inject-css": "^2.0.0",
     "vite-plugin-linter": "^2.1.1",
     "vite-tsconfig-paths": "^4.3.1"
   },
