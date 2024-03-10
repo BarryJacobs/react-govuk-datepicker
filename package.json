@@ -1,9 +1,10 @@
 {
   "name": "react-govuk-datepicker",
   "private": false,
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "dist/react-govuk-datepicker.js",
+  "module": "dist/react-govuk-datepicker.js",
   "types": "dist/main.d.ts",
   "files": [
     "dist"
