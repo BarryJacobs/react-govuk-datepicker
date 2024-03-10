@@ -10,10 +10,12 @@ import {
   addYears,
   isEqual
 } from "date-fns"
-import { CgChevronLeft } from "@react-icons/all-files/cg/CgChevronLeft"
-import { CgChevronDoubleLeft } from "@react-icons/all-files/cg/CgChevronDoubleLeft"
-import { CgChevronRight } from "@react-icons/all-files/cg/CgChevronRight"
-import { CgChevronDoubleRight } from "@react-icons/all-files/cg/CgChevronDoubleRight"
+import {
+  HiMiniChevronLeft,
+  HiMiniChevronDoubleLeft,
+  HiMiniChevronRight,
+  HiMiniChevronDoubleRight
+} from "react-icons/hi2"
 import { CalendarNavigationButton } from "./CalendarNavigationButton"
 import { CalendarDayHeading } from "./CalendarDayHeading"
 import { CalendarDayButton } from "./CalendarDayButton"
@@ -108,12 +110,12 @@ export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
           <div className="ds_datepicker__dialog__navbuttons">
             <CalendarNavigationButton
               description="Previous year"
-              icon={CgChevronDoubleLeft}
+              icon={HiMiniChevronDoubleLeft}
               onClick={() => onChangeSelectedDate(addYears(calendarDate, -1))}
             />
             <CalendarNavigationButton
               description="Previous month"
-              icon={CgChevronLeft}
+              icon={HiMiniChevronLeft}
               onClick={() => onChangeSelectedDate(addMonths(calendarDate, -1))}
             />
           </div>
@@ -121,17 +123,16 @@ export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
           <div className="ds_datepicker__dialog__navbuttons">
             <CalendarNavigationButton
               description="Next month"
-              icon={CgChevronRight}
+              icon={HiMiniChevronRight}
               onClick={() => onChangeSelectedDate(addMonths(calendarDate, 1))}
             />
             <CalendarNavigationButton
               description="Next year"
-              icon={CgChevronDoubleRight}
+              icon={HiMiniChevronDoubleRight}
               onClick={() => onChangeSelectedDate(addYears(calendarDate, 1))}
             />
           </div>
         </div>
-
         <table className="ds_datepicker__dialog__table" role="grid">
           <caption id="datepicker-ds1-caption" className="ds_datepicker__dialog__table-caption">
             You can use the cursor keys to select a date
@@ -145,7 +146,6 @@ export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
           </thead>
           <tbody>{renderDays}</tbody>
         </table>
-
         <div className="ds_datepicker__dialog__buttongroup">
           <button
             type="button"

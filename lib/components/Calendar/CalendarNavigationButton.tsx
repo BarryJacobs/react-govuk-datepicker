@@ -1,4 +1,4 @@
-import { IconType } from "@react-icons/all-files"
+import { IconType } from "react-icons"
 
 interface CalendarNavigationButtonProps {
   description: string
