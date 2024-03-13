@@ -1,7 +1,7 @@
 {
   "name": "react-govuk-datepicker",
   "private": false,
-  "version": "1.0.6",
+  "version": "1.0.7",
   "type": "module",
   "main": "dist/react-govuk-datepicker.js",
   "module": "dist/react-govuk-datepicker.js",
@@ -68,11 +68,17 @@
     "react": "16.8.0 || >=17.x",
     "react-dom": "16.8.0 || >=17.x"
   },
+  "description": "A React GOV.UK date picker for government platforms and services.",
   "repository": {
     "type": "git",
     "url": "https://github.com/BarryJacobs/react-govuk-datepicker"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "typescript",
+    "datepicker",
+    "govuk"
+  ],
   "author": "barry jacobs",
   "bugs": {
     "url": "https://github.com/BarryJacobs/react-govuk-datepicker/issues"
