@@ -1,4 +1,4 @@
-# GOV.UK React Date Picker Implementation User Guide
+# GOV.UK React Date Picker User Guide
 
 The GOV.UK Design System is an official design framework produced by the UK Government and defines best practices and rules that must be followed to ensure that your code base is GDS Compliant.
 
