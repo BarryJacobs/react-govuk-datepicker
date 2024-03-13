@@ -25,13 +25,13 @@ describe("useIsMobile hook", () => {
       })
     })
 
-    it(`should return ${expected}`, () => {
-      const { result } = renderHook(() => useIsMobile())
-      expect(result.current).toBe(expected)
-    })
-
     afterAll(() => {
       vi.restoreAllMocks()
+    })
+
+    it(`must return ${expected}`, () => {
+      const { result } = renderHook(() => useIsMobile())
+      expect(result.current).toBe(expected)
     })
   })
 })
