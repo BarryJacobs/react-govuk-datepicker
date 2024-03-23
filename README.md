@@ -56,6 +56,13 @@ Or via [yarn](https://github.com/yarnpkg/yarn):
 yarn add react-govuk-datepicker
 ```
 
+The date picker uses GDS styles which can be installed via the [govuk-frontend](https://github.com/alphagov/govuk-frontend) package:
+
+```
+npm install govuk-frontend --save
+yarn add govuk-frontend
+```
+
 ## Accessibility
 
 ### Keyboard support for Input

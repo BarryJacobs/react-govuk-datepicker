@@ -1,7 +1,7 @@
 {
   "name": "react-govuk-datepicker",
   "private": false,
-  "version": "1.0.9",
+  "version": "1.0.10",
   "type": "module",
   "main": "dist/react-govuk-datepicker.js",
   "module": "dist/react-govuk-datepicker.js",
@@ -63,7 +63,8 @@
   },
   "peerDependencies": {
     "react": "16.8.0 || >=17.x",
-    "react-dom": "16.8.0 || >=17.x"
+    "react-dom": "16.8.0 || >=17.x",
+    "govuk-frontend": ">=4.4.x"
   },
   "description": "A React GOV.UK date picker for government platforms and services.",
   "repository": {
