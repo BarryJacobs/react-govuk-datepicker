@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from "react"
-import { FaRegCalendar } from "react-icons/fa"
+import { GenericIcon } from "../GenericIcon/GenericIcon"
 import { useIsMobile } from "../../hooks"
 import { InputWidth, InputWidthClass } from "../../types"
 import { format, parse, startOfDay, parseISO, isValid } from "date-fns"
@@ -106,7 +106,9 @@ export const DatePicker = ({
 
   const containerAttr = useMemo(() => {
     return {
-      className: error ? "govuk-form-group govuk-form-group--error" : "govuk-form-group"
+      className: error
+        ? "govuk-body govuk-form-group govuk-form-group--error"
+        : "govuk-body govuk-form-group"
     }
   }, [error])
 
@@ -575,7 +577,7 @@ export const DatePicker = ({
                 onKeyDown={handleCalendarButtonKeyDown}
                 onClick={() => toggleCalendar()}>
                 <span className="visually-hidden">Choose date</span>
-                <FaRegCalendar aria-hidden={true} role="img" size={16} />
+                <GenericIcon iconName="Calendar" />
               </button>
             </div>
           )}

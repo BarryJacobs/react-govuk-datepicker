@@ -1,3 +1,19 @@
+import { CalendarIcon as Calendar } from "../assets/CalendarIcon"
+import { NextMonthIcon as NextMonth } from "../assets/NextMonthIcon"
+import { NextYearIcon as NextYear } from "../assets/NextYearIcon"
+import { PreviousMonthIcon as PreviousMonth } from "../assets/PreviousMonthIcon"
+import { PreviousYearIcon as PreviousYear } from "../assets/PreviousYearIcon"
+
+export const Icons = {
+  Calendar,
+  NextMonth,
+  NextYear,
+  PreviousMonth,
+  PreviousYear
+}
+
+export type IconType = keyof typeof Icons
+
 export enum InputWidth {
   Full = 1,
   ThreeQuarters = 2,

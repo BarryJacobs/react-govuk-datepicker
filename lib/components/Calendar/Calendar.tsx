@@ -10,12 +10,6 @@ import {
   addYears,
   isEqual
 } from "date-fns"
-import {
-  HiMiniChevronLeft,
-  HiMiniChevronDoubleLeft,
-  HiMiniChevronRight,
-  HiMiniChevronDoubleRight
-} from "react-icons/hi2"
 import { CalendarNavigationButton } from "./CalendarNavigationButton"
 import { CalendarDayHeading } from "./CalendarDayHeading"
 import { CalendarDayButton } from "./CalendarDayButton"
@@ -110,12 +104,12 @@ export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
           <div className="ds_datepicker__dialog__navbuttons">
             <CalendarNavigationButton
               description="Previous year"
-              icon={HiMiniChevronDoubleLeft}
+              iconName="PreviousYear"
               onClick={() => onChangeSelectedDate(addYears(calendarDate, -1))}
             />
             <CalendarNavigationButton
               description="Previous month"
-              icon={HiMiniChevronLeft}
+              iconName="PreviousMonth"
               onClick={() => onChangeSelectedDate(addMonths(calendarDate, -1))}
             />
           </div>
@@ -123,12 +117,12 @@ export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
           <div className="ds_datepicker__dialog__navbuttons">
             <CalendarNavigationButton
               description="Next month"
-              icon={HiMiniChevronRight}
+              iconName="NextMonth"
               onClick={() => onChangeSelectedDate(addMonths(calendarDate, 1))}
             />
             <CalendarNavigationButton
               description="Next year"
-              icon={HiMiniChevronDoubleRight}
+              iconName="NextYear"
               onClick={() => onChangeSelectedDate(addYears(calendarDate, 1))}
             />
           </div>

@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react"
 import { describe, it, expect, vi } from "vitest"
 import { configureAxe, toHaveNoViolations } from "jest-axe"
-import { MdArrowForward } from "react-icons/md"
 import { CalendarNavigationButton } from "../CalendarNavigationButton"
 import userEvent from "@testing-library/user-event"
 
@@ -9,7 +8,7 @@ expect.extend(toHaveNoViolations)
 
 const mockOnClick = vi.fn()
 const testComponent = (
-  <CalendarNavigationButton description="Next Month" icon={MdArrowForward} onClick={mockOnClick} />
+  <CalendarNavigationButton description="Next Month" iconName="NextMonth" onClick={mockOnClick} />
 )
 
 describe("CalendarNavigationButton", () => {

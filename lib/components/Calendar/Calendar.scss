@@ -242,12 +242,12 @@ $ds_breakpoints: (
 }
 
 @mixin ds_tiny-size($type-grid: 8px) {
-  font-size: px-to-rem($tiny-size);
-  line-height: line-height-on-grid($tiny-size, $grid: $type-grid);
+  font-size: px-to-rem($tiny-size) !important;
+  line-height: line-height-on-grid($tiny-size, $grid: $type-grid) !important;
 
   @include ds_media-query(medium) {
-    font-size: px-to-rem($tiny-size--medium);
-    line-height: line-height-on-grid($tiny-size--medium, $grid: $type-grid);
+    font-size: px-to-rem($tiny-size--medium) !important;
+    line-height: line-height-on-grid($tiny-size--medium, $grid: $type-grid) !important;
   }
 }
 
@@ -293,7 +293,7 @@ $ds_breakpoints: (
   &__dialog {
     @include ds_box-shadow;
 
-    font-family: "Roboto";
+    font-family: inherit;
     background-color: $ds_colour__background--primary;
     clear: both;
     display: none;
@@ -335,7 +335,7 @@ $ds_breakpoints: (
 
     &__title {
       @include ds_small-size;
-      line-height: line-height-on-grid($small-size, 2);
+      line-height: line-height-on-grid($small-size, 2) !important;
       margin: 0 !important;
       text-transform: uppercase;
     }
@@ -386,7 +386,7 @@ $ds_breakpoints: (
       }
 
       button {
-        font-family: "Roboto";
+        box-shadow: none;
         background-color: transparent;
         border-width: 0;
         color: $ds_colour__text;
@@ -452,6 +452,7 @@ $ds_breakpoints: (
           color: $ds_colour__text--reversed;
         }
 
+        &:not(.fully-hidden):hover,
         &:focus {
           color: $ds_colour__focus;
           position: relative;
@@ -463,7 +464,7 @@ $ds_breakpoints: (
     &__table-caption {
       @include ds_tiny-size;
       caption-side: bottom;
-      line-height: 2;
+      line-height: 2 !important;
       margin-top: 8px;
     }
 
@@ -498,7 +499,7 @@ $ds_breakpoints: (
       position: absolute;
 
       &__title {
-        line-height: line-height-on-grid($small-size--medium, 1.5);
+        line-height: line-height-on-grid($small-size--medium, 1.5) !important;
         padding: 8px 0;
       }
 
@@ -517,7 +518,7 @@ $ds_breakpoints: (
       }
 
       &__table-caption {
-        line-height: line-height-on-grid($tiny-size--medium, 2);
+        line-height: line-height-on-grid($tiny-size--medium, 2) !important;
       }
     }
   }

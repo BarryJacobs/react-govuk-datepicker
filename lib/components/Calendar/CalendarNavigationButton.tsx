@@ -1,14 +1,15 @@
-import { IconType } from "react-icons"
+import { IconType } from "../../types"
+import { GenericIcon } from "../GenericIcon/GenericIcon"
 
 interface CalendarNavigationButtonProps {
   description: string
-  icon: IconType
+  iconName: IconType
   onClick: () => void
 }
 
 export const CalendarNavigationButton = ({
   description,
-  icon: Icon,
+  iconName,
   onClick
 }: CalendarNavigationButtonProps) => {
   return (
@@ -18,7 +19,7 @@ export const CalendarNavigationButton = ({
       aria-label={description}
       onClick={onClick}>
       <span className="visually-hidden">{description}</span>
-      <Icon className="ds_icon" focusable={false} aria-hidden={true} role="img" />
+      <GenericIcon iconName={iconName} />
     </button>
   )
 }

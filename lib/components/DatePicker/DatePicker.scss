@@ -2,7 +2,6 @@
   position: relative;
   span {
     font-weight: 400;
-    font-family: "Roboto";
     display: inline-block;
     @media (min-width: 40.0625em) {
       font-size: 1.1875rem;
@@ -49,7 +48,6 @@
 
   .date-input {
     font-weight: 400;
-    font-family: "Roboto";
     caret-color: transparent;
     cursor: default;
     color: white;

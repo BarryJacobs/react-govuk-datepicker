@@ -54,7 +54,7 @@ const CalendarDayButton = forwardRef<HTMLButtonElement, CalendarDayButtonProps>(
     ref
   ) => {
     const buttonAttr: ButtonAttr = {
-      className: "",
+      className: "govuk-button",
       "data-form": "date-select",
       "data-button": `button-${index}`,
       "aria-label": format(dayDate, "EEEE d MMMM yyyy", { locale: enGB })
@@ -63,10 +63,10 @@ const CalendarDayButton = forwardRef<HTMLButtonElement, CalendarDayButtonProps>(
     if (isWithinCurrentMonth(calendarDate, dayDate)) {
       buttonAttr.tabIndex = isEqual(calendarDate, dayDate) ? 0 : -1
       if (isToday(dayDate)) {
-        buttonAttr.className += "ds_datepicker__today "
+        buttonAttr.className += " ds_datepicker__today "
       }
       if (isEqual(calendarDate, dayDate)) {
-        buttonAttr.className += "ds_selected"
+        buttonAttr.className += " ds_selected"
       }
     } else {
       buttonAttr.className = "fully-hidden"

@@ -4,4 +4,4 @@ import { InputWidth, InputWidthClass } from "./types"
 
 export { DatePicker, Calendar, InputWidth, InputWidthClass }
 
-import "./styles/styles.scss"
+// import "./styles/styles.scss"
