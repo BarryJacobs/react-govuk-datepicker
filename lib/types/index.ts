@@ -22,11 +22,7 @@ export enum InputWidth {
   OneThird = 5,
   OneQuarter = 6,
   Char20 = 7,
-  Char10 = 8,
-  Char5 = 9,
-  Char4 = 10,
-  Char3 = 11,
-  Char2 = 12
+  Char10 = 8
 }
 
 export const InputWidthClass: Record<InputWidth, string> = {
@@ -37,9 +33,5 @@ export const InputWidthClass: Record<InputWidth, string> = {
   [InputWidth.OneThird]: "govuk-!-width-one-third",
   [InputWidth.OneQuarter]: "govuk-!-width-one-quarter",
   [InputWidth.Char20]: "govuk-input--width-20",
-  [InputWidth.Char10]: "govuk-input--width-10",
-  [InputWidth.Char5]: "govuk-input--width-5",
-  [InputWidth.Char4]: "govuk-input--width-4",
-  [InputWidth.Char3]: "govuk-input--width-3",
-  [InputWidth.Char2]: "govuk-input--width-2"
+  [InputWidth.Char10]: "govuk-input--width-10"
 }

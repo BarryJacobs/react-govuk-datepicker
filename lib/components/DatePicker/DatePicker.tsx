@@ -58,7 +58,7 @@ export const DatePicker = ({
 
   const inputAttr = useMemo(() => {
     const inputProps = {
-      type: "number",
+      type: "text",
       className: "govuk-input date-input",
       disabled,
       autoComplete: "off",
@@ -66,9 +66,6 @@ export const DatePicker = ({
       "aria-disabled": disabled,
       "aria-describedby": "",
       "aria-invalid": false
-    }
-    if (width) {
-      inputProps.className += ` ${InputWidthClass[width]}`
     }
     if (inputClassExt) {
       inputProps.className += ` ${inputClassExt}`
