@@ -1,5 +1,5 @@
 import { DatePicker } from "./components/DatePicker/DatePicker"
 import { Calendar } from "./components/Calendar/Calendar"
-import { InputWidth, InputWidthClass } from "./types"
+import { InputWidth, InputWidthClass, DayEnum } from "./types"
 
-export { DatePicker, Calendar, InputWidth, InputWidthClass }
+export { DatePicker, Calendar, InputWidth, InputWidthClass, DayEnum }

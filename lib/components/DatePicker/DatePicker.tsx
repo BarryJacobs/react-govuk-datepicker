@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useMemo } from "react"
 import { GenericIcon } from "../GenericIcon/GenericIcon"
 import { useIsMobile } from "../../hooks"
-import { InputWidth, InputWidthClass } from "../../types"
+import { InputWidth, InputWidthClass, DayEnum } from "../../types"
 import { format, parse, startOfDay, parseISO, isValid } from "date-fns"
 import { enGB } from "date-fns/locale"
 import { Calendar } from "../Calendar/Calendar"
@@ -24,6 +24,7 @@ interface DatePickerProps {
   labelClassExt?: string
   inputClassExt?: string
   showCalendarButton?: boolean
+  calendarStartDay?: DayEnum
   hint?: string
   disabled?: boolean
   error?: string
@@ -41,6 +42,7 @@ export const DatePicker = ({
   labelClassExt,
   inputClassExt,
   showCalendarButton = true,
+  calendarStartDay = DayEnum.Sunday,
   disabled,
   error,
   onBlur,
@@ -584,6 +586,7 @@ export const DatePicker = ({
             <Calendar
               id={`${identifier}-calendar`}
               date={calendarDate}
+              calendarStartDay={calendarStartDay}
               onChange={handleCalendarDateChange}
               onCancel={handleCalendarCancel}
             />

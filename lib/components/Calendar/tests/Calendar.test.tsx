@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest"
 import { configureAxe, toHaveNoViolations } from "jest-axe"
 import { startOfDay } from "date-fns"
 import { Calendar } from "../Calendar"
+import { DayEnum } from "../../../types"
 import userEvent from "@testing-library/user-event"
 
 expect.extend(toHaveNoViolations)
@@ -12,7 +13,13 @@ const mockOnChange = vi.fn()
 const mockOnCancel = vi.fn()
 
 const testComponent = (
-  <Calendar id="test-calendar" date={mockDate} onChange={mockOnChange} onCancel={mockOnCancel} />
+  <Calendar
+    id="test-calendar"
+    date={mockDate}
+    onChange={mockOnChange}
+    onCancel={mockOnCancel}
+    calendarStartDay={DayEnum.Sunday}
+  />
 )
 
 describe("Calendar", () => {

@@ -13,41 +13,58 @@ import {
 import { CalendarNavigationButton } from "./CalendarNavigationButton"
 import { CalendarDayHeading } from "./CalendarDayHeading"
 import { CalendarDayButton } from "./CalendarDayButton"
+import { DayEnum } from "../../types"
 import FocusLock from "react-focus-lock"
 
 import "./Calendar.scss"
 
-const dayAbbreviationDescriptionMap: Record<string, string> = {
-  Su: "Sunday",
-  Mo: "Monday",
-  Tu: "Tuesday",
-  We: "Wednesday",
-  Th: "Thursday",
-  Fr: "Friday",
-  Sa: "Saturday"
+type DayHeadingType = {
+  code: string
+  description: string
 }
+
+const dayHeadingsReference: DayHeadingType[] = [
+  { code: "Su", description: "Sunday" },
+  { code: "Mo", description: "Monday" },
+  { code: "Tu", description: "Tuesday" },
+  { code: "We", description: "Wednesday" },
+  { code: "Th", description: "Thursday" },
+  { code: "Fr", description: "Friday" },
+  { code: "Sa", description: "Saturday" }
+]
 
 interface CalendarProps {
   id: string
   date: Date
+  calendarStartDay: DayEnum
   onChange: (date: Date) => void
   onCancel: () => void
 }
 
-const getFirstSundayBeforeFirstOfMonth = (date: Date) => {
-  const startOfMonthDate = startOfMonth(date)
-  if (getDay(startOfMonthDate) === 0) {
-    return startOfMonthDate
-  } else {
-    const daysToSubtract = getDay(startOfMonthDate)
-    return subDays(startOfMonthDate, daysToSubtract)
-  }
+const getFirstCalendarStartDayBeforeFirstOfMonth = (date: Date, calendarStartDay: DayEnum) => {
+  const firstOfMonth = startOfMonth(date)
+  const firstDayOfWeek = getDay(firstOfMonth)
+
+  const dayDifference = firstDayOfWeek - calendarStartDay
+  const adjustedDifference = dayDifference < 0 ? dayDifference + 7 : dayDifference
+
+  return subDays(firstOfMonth, adjustedDifference)
 }
 
-export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
+export const Calendar = ({ id, date, onChange, onCancel, calendarStartDay }: CalendarProps) => {
   const [calendarDate, setCalendarDate] = useState(date)
   const [selectedIndex, setSelectedIndex] = useState({ index: 0 })
   const buttonRefs = useRef<(HTMLButtonElement | null)[]>(Array(42).fill(null))
+
+  const dayHeadings = useMemo(() => {
+    const headings: DayHeadingType[] = []
+    let currentDay: number = calendarStartDay as number
+    for (let i = 0; i < 7; i++) {
+      headings.push(dayHeadingsReference[currentDay])
+      currentDay = (currentDay + 1) % 7
+    }
+    return headings
+  }, [calendarStartDay])
 
   const onChangeSelectedDate = useCallback((date: Date) => {
     setCalendarDate(date)
@@ -58,7 +75,7 @@ export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
   }, [])
 
   const renderDays = useMemo(() => {
-    let dayDate = getFirstSundayBeforeFirstOfMonth(calendarDate)
+    let dayDate = getFirstCalendarStartDayBeforeFirstOfMonth(calendarDate, calendarStartDay)
     const rows = []
     for (let row = 0; row < 6; row++) {
       const columns = []
@@ -133,8 +150,12 @@ export const Calendar = ({ id, date, onChange, onCancel }: CalendarProps) => {
           </caption>
           <thead>
             <tr>
-              {Object.entries(dayAbbreviationDescriptionMap).map(([key, value]) => (
-                <CalendarDayHeading key={uuidv4()} text={key} description={value} />
+              {dayHeadings.map(item => (
+                <CalendarDayHeading
+                  key={uuidv4()}
+                  text={item.code}
+                  description={item.description}
+                />
               ))}
             </tr>
           </thead>
