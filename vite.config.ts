@@ -2,7 +2,7 @@
 
 import { resolve } from "node:path"
 import { defineConfig } from "vite"
-import { libInjectCss } from "vite-plugin-lib-inject-css"
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js"
 import react from "@vitejs/plugin-react"
 import dts from "vite-plugin-dts"
 import tsConfigPaths from "vite-tsconfig-paths"
@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     react(),
     tsConfigPaths(),
-    libInjectCss(),
+    cssInjectedByJsPlugin(),
     dts({
       include: ["lib"]
     })
@@ -20,10 +20,19 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       entry: resolve(__dirname, "lib/main.ts"),
-      formats: ["es"]
+      name: "ReactGovukDatepicker",
+      fileName: format => `react-govuk-datepicker.${format}.js`,
+      formats: ["es", "umd"]
     },
     rollupOptions: {
-      external: ["react", "react/jsx-runtime"]
+      external: ["react", "react-dom", "react/jsx-runtime"],
+      output: {
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+          "react/jsx-runtime": "jsxRuntime"
+        }
+      }
     }
   },
   test: {
