@@ -1,6 +1,16 @@
+## 1.0.19 2025-02-09
+
+- Fixed issue with recursive updates using react hook form controller
+
+## 1.0.18 2025-02-08
+
+## 1.0.17 2025-02-08
+
+## 1.0.16 2025-02-07
+
 ## 1.0.15 2025-02-07
 
-- Possible fix for issue with recursive updates using react hook form controller
+- Investigation of issue with recursive updates using react hook form controller
 
 ## 1.0.14 2024-11-05
 

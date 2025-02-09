@@ -53,6 +53,7 @@ export const DatePicker = ({
   const [trackInput, setTrackInput] = useState(false)
   const [selectedPart, setSelectedPart] = useState<DatePart>(DatePart.None)
   const [showCalendar, setShowCalendar] = useState(false)
+  const internalChangeRef = useRef<boolean>(false)
   const liveRegionRef = useRef<HTMLSpanElement>(null)
   const calendarRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -126,6 +127,11 @@ export const DatePicker = ({
       focusInput()
     }
     setShowCalendar(prevShowCalendar => !prevShowCalendar)
+  }
+
+  const internalDateUpdate = (date: string) => {
+    internalChangeRef.current = true
+    setDate(date)
   }
 
   const updateLiveText = (part: DatePart, value: string = "") => {
@@ -233,7 +239,7 @@ export const DatePicker = ({
       default:
         break
     }
-    setDate(newDate)
+    internalDateUpdate(newDate)
     updateLiveText(selectedPart, newValue)
   }
 
@@ -266,7 +272,7 @@ export const DatePicker = ({
         break
     }
 
-    setDate(newDate)
+    internalDateUpdate(newDate)
     updateLiveText(selectedPart, newValue)
   }
 
@@ -342,7 +348,7 @@ export const DatePicker = ({
       updateLiveText(selectedPart, newValue)
     }
 
-    setDate(newDate)
+    internalDateUpdate(newDate)
     setSelectedPart(newSelectedPart)
     setTrackInput(newSelectedPart !== selectedPart)
   }
@@ -363,7 +369,7 @@ export const DatePicker = ({
         break
     }
 
-    setDate(newDate)
+    internalDateUpdate(newDate)
     setTrackInput(true)
   }
 
@@ -419,7 +425,7 @@ export const DatePicker = ({
   }
 
   const handleCalendarDateChange = (date: Date) => {
-    setDate(format(date as Date, "dd/MM/yyyy"))
+    internalDateUpdate(format(date as Date, "dd/MM/yyyy"))
     handleCalendarCancel()
   }
 
@@ -474,9 +480,9 @@ export const DatePicker = ({
     const dateFromDDMMYYYY = parse(pastedText, "dd/MM/yyyy", new Date())
 
     if (!isNaN(dateFromISO.getTime())) {
-      setDate(format(dateFromISO, "dd/MM/yyyy", { locale: enGB }))
+      internalDateUpdate(format(dateFromISO, "dd/MM/yyyy", { locale: enGB }))
     } else if (!isNaN(dateFromDDMMYYYY.getTime())) {
-      setDate(pastedText)
+      internalDateUpdate(pastedText)
     } else {
       e.preventDefault()
     }
@@ -485,11 +491,6 @@ export const DatePicker = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
   }
-
-  useEffect(() => {
-    const parsedDate = parse(date, "P", new Date(), { locale: enGB })
-    setCalendarDate(startOfDay(isValid(parsedDate) ? parsedDate : new Date()))
-  }, [date])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -504,23 +505,20 @@ export const DatePicker = ({
   }, [])
 
   useEffect(() => {
-    const pattern: RegExp = /^(\d{2}|\d{1}|dd)\/(\d{2}|\d{1}|mm)\/(\d{4}|yyyy)$/
-    if (!value || value.trim() === "" || !pattern.test(value)) {
-      if (date !== "dd/mm/yyyy") {
-        setDate("dd/mm/yyyy")
-      }
+    if (internalChangeRef.current) {
+      internalChangeRef.current = false
+      onChange(date)
     } else {
-      if (date !== value) {
-        setDate(value)
-      }
+      const pattern: RegExp = /^(\d{2}|\d{1}|dd)\/(\d{2}|\d{1}|mm)\/(\d{4}|yyyy)$/
+      if (!value || value.trim() === "" || !pattern.test(value) || value === date) return
+      setDate(value)
     }
-  }, [value])
+  }, [value, date, onChange])
 
   useEffect(() => {
-    if (date !== value) {
-      onChange(date)
-    }
-  }, [date, value, onChange])
+    const parsedDate = parse(date, "P", new Date(), { locale: enGB })
+    setCalendarDate(startOfDay(isValid(parsedDate) ? parsedDate : new Date()))
+  }, [date])
 
   return (
     <div {...containerAttr}>
