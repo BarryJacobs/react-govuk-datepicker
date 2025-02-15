@@ -1,4 +1,5 @@
 @use "sass:math";
+@use "sass:map";
 
 $root-font-size: 16px !default;
 
@@ -94,10 +95,10 @@ $ds_breakpoints: (
 }
 
 @mixin ds_media-query($breakpoint) {
-  @if not map-has-key($ds_breakpoints, $breakpoint) {
+  @if not map.get($ds_breakpoints, $breakpoint) {
     @error 'Breakpoint "#{$breakpoint}" not defined.';
   }
-  $condition: map-get($ds_breakpoints, $breakpoint);
+  $condition: map.get($ds_breakpoints, $breakpoint);
   @media #{$condition} {
     @content;
   }
@@ -121,21 +122,6 @@ $ds_breakpoints: (
 
 @mixin ds_colwidth($columns: 1, $total: 12, $gutter: $grid-gap-x) {
   width: calc(#{100% * math.div($columns, $total)} - #{$gutter});
-}
-
-@mixin ds_button-sizing--small($icon: true) {
-  min-height: $button__height--small;
-  min-width: $button__height--small;
-  padding-top: 12px;
-  padding-bottom: 12px;
-
-  @if $icon {
-    > .ds_icon {
-      height: 32px;
-      padding: 8px;
-      width: 32px;
-    }
-  }
 }
 
 @mixin ds_layout($gutter: $grid-gap-x, $sub: false) {
@@ -168,7 +154,6 @@ $ds_breakpoints: (
     background-color $transition-out-time,
     outline-color $transition-out-time;
   z-index: 1;
-
   outline: 0 !important;
 
   &:focus {
@@ -208,7 +193,6 @@ $ds_breakpoints: (
           top: 0px;
           width: 100%;
           z-index: 0;
-
           @include ds_media-query-high-contrast {
             content: none;
           }
@@ -252,8 +236,10 @@ $ds_breakpoints: (
 }
 
 @mixin ds_small-size($type-grid: 8px) {
-  font-size: px-to-rem($small-size);
-  line-height: line-height-on-grid($small-size, $grid: $type-grid);
+  & {
+    font-size: px-to-rem($small-size);
+    line-height: line-height-on-grid($small-size, $grid: $type-grid);
+  }
 
   @include ds_media-query(medium) {
     font-size: px-to-rem($small-size--medium);
@@ -334,10 +320,10 @@ $ds_breakpoints: (
     }
 
     &__title {
-      @include ds_small-size;
       line-height: line-height-on-grid($small-size, 2) !important;
       margin: 0 !important;
       text-transform: uppercase;
+      @include ds_small-size;
     }
 
     &__navbuttons {
@@ -350,9 +336,7 @@ $ds_breakpoints: (
         margin: 0;
         padding: 4px;
         min-width: 32px;
-
-        @include ds_blocklink;
-        display: inline-block;
+        display: inline-block !important;
 
         &:hover {
           color: currentColor;
@@ -364,6 +348,8 @@ $ds_breakpoints: (
           position: static;
           width: 24px;
         }
+
+        @include ds_blocklink;
       }
     }
 
@@ -380,9 +366,9 @@ $ds_breakpoints: (
       }
 
       th {
-        @include ds_small-size;
         color: $ds_colour__text--secondary;
         font-weight: $normal;
+        @include ds_small-size;
       }
 
       button {
@@ -395,9 +381,6 @@ $ds_breakpoints: (
         margin: 0;
         padding: 0;
         min-width: 40px;
-
-        @include ds_small-size;
-        @include ds_blocklink;
 
         &:focus {
           transition-duration: 0s;
@@ -458,19 +441,22 @@ $ds_breakpoints: (
           position: relative;
           z-index: 2;
         }
+
+        @include ds_blocklink;
+        @include ds_small-size;
       }
     }
 
     &__table-caption {
-      @include ds_tiny-size;
       caption-side: bottom;
       line-height: 2 !important;
       margin-top: 8px;
+      @include ds_tiny-size;
     }
 
     &__buttongroup {
+      overflow: visible !important;
       @include ds_layout(8px);
-      overflow: visible;
 
       button {
         @include ds_colwidth(1, 2, 8px);
@@ -486,10 +472,12 @@ $ds_breakpoints: (
   }
 
   &__button {
-    @include ds_small-size;
-    @include ds_button-sizing--small;
-
     align-self: end;
+    min-height: $button__height--small;
+    min-width: $button__height--small;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    @include ds_small-size;
   }
 }
 

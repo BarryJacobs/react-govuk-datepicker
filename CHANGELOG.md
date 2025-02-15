@@ -1,3 +1,7 @@
+## 1.0.20 2025-02-09
+
+- Updated Sass version and fixed issues with deprecated styling
+
 ## 1.0.19 2025-02-09
 
 - Fixed issue with recursive updates using react hook form controller

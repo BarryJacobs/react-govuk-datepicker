@@ -35,6 +35,13 @@ export default defineConfig({
       }
     }
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern"
+      }
+    }
+  },
   test: {
     setupFiles: ["./setupTests.ts"],
     globals: true,

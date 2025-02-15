@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react"
+import { useState, useRef, useEffect, useMemo, useImperativeHandle, forwardRef } from "react"
 import { GenericIcon } from "../GenericIcon/GenericIcon"
 import { useIsMobile } from "../../hooks"
 import { InputWidth, InputWidthClass, DayEnum } from "../../types"
@@ -28,26 +28,29 @@ interface DatePickerProps {
   hint?: string
   disabled?: boolean
   error?: string
+  onBlur?: (value: React.FocusEvent<HTMLInputElement>) => void
   onChange: (value: string) => void
-  onBlur: (value: React.FocusEvent<HTMLInputElement>) => void
 }
 
-export const DatePicker = ({
-  identifier,
-  label,
-  value,
-  width,
-  hint,
-  multiQuestion,
-  labelClassExt,
-  inputClassExt,
-  showCalendarButton = true,
-  calendarStartDay = DayEnum.Sunday,
-  disabled,
-  error,
-  onBlur,
-  onChange
-}: DatePickerProps) => {
+const DatePickerComponent = (
+  {
+    identifier,
+    label,
+    value,
+    width,
+    hint,
+    multiQuestion,
+    labelClassExt,
+    inputClassExt,
+    showCalendarButton = true,
+    calendarStartDay = DayEnum.Sunday,
+    disabled,
+    error,
+    onBlur,
+    onChange
+  }: DatePickerProps,
+  ref: React.Ref<HTMLInputElement | undefined>
+) => {
   const [date, setDate] = useState("dd/mm/yyyy")
   const [calendarDate, setCalendarDate] = useState(startOfDay(new Date()))
   const [trackInput, setTrackInput] = useState(false)
@@ -56,8 +59,10 @@ export const DatePicker = ({
   const internalChangeRef = useRef<boolean>(false)
   const liveRegionRef = useRef<HTMLSpanElement>(null)
   const calendarRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
   const isMobile = useIsMobile()
+
+  const inputRef = useRef<HTMLInputElement>(null)
+  useImperativeHandle(ref, () => inputRef.current || undefined)
 
   const inputAttr = useMemo(() => {
     const inputProps = {
@@ -600,3 +605,7 @@ export const DatePicker = ({
     </div>
   )
 }
+
+export const DatePicker = forwardRef<HTMLInputElement | undefined, DatePickerProps>(
+  DatePickerComponent
+)
